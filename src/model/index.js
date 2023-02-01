@@ -1,10 +1,16 @@
 // Kết nối cơ sở dữ liệu
 const { Sequelize } = require('sequelize');
-const sequelize = new Sequelize('db_food', 'root', '1234', {
-	dialect: 'mysql',
-	host: 'localhost',
-	port: '3306',
-});
+const config = require('../config/index');
+const sequelize = new Sequelize(
+	config.dbDatatbase,
+	config.dbUser,
+	config.dbPass,
+	{
+		dialect: config.dbDialet,
+		host: config.dbHost,
+		port: config.dbPort,
+	},
+);
 module.exports = sequelize;
 // dialect: hệ cơ sở dữ liệu đang sử dụng
 // try {

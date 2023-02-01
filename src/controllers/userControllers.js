@@ -108,11 +108,25 @@ const deleteUser = async (req, res) => {
 		error(res, 'Server is error');
 	}
 };
-
+// like restaurant
+const likeRes = async (req, res) => {};
+// unlike restaurant
+const unlikeRes = async (req, res) => {};
+// get like restauurant list
+const getLikeResList = async (req, res) => {};
+// rate restaurant
+const rateRes = async (req, res) => {};
+// get rate restaurant list
+const getRateResList = async (req, res) => {};
 module.exports = {
 	getAllUser,
 	getUser,
 	createUser,
 	updateUser,
 	deleteUser,
+	likeRes,
+	unlikeRes,
+	getLikeResList,
+	rateRes,
+	getRateResList,
 };

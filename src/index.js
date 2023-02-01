@@ -16,6 +16,6 @@ app.use(express.json());
 app.use(express.static('.'));
 app.use(cors());
 app.listen(config.port, () => {
-	console.log('Server is running....');
+	console.log(`Server running at ${config.port}...`);
 });
 app.use('/api', rootRoute);
