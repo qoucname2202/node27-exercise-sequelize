@@ -11,6 +11,28 @@ const {
 	conflict,
 } = require('../config/response');
 const { hasReqClient, hasDataExist } = require('../utils/utils');
+// check user and restaurant is exits database
+const hasUserResExist = async (
+	response,
+	tblUser,
+	userKey,
+	userId,
+	tblRes,
+	resKey,
+	resId,
+) => {
+	const isUserExits = await hasDataExist(tblUser, userKey, userId);
+	const isResExits = await hasDataExist(tblRes, resKey, resId);
+	if (!isUserExits) {
+		notFound(response, { user_id: userId }, 'User does not existed');
+		return false;
+	}
+	if (!isResExits) {
+		notFound(response, { res_id: resId }, 'Restaurant does not existed');
+		return false;
+	}
+	return true;
+};
 
 // like restaurant
 const likeRes = async (req, res) => {
@@ -132,6 +154,66 @@ const getLikeResList = async (req, res) => {
 // rate restaurant
 const rateRes = async (req, res) => {
 	try {
+		let { user_id, res_id, amount } = req.body;
+		let isReqExits = hasReqClient(res, user_id, res_id, amount);
+		if (!isReqExits) {
+			return;
+		}
+		if (Number(amount) < 0 || Number(amount) >= 6) {
+			failSyntax(
+				res,
+				{
+					amount,
+				},
+				'Amount valid!',
+			);
+			return;
+		}
+		let isUserAndResExits = await hasUserResExist(
+			res,
+			'user',
+			'user_id',
+			Number(user_id),
+			'restaurant',
+			'res_id',
+			Number(res_id),
+		);
+		if (!isUserAndResExits) {
+			return;
+		}
+
+		const isRate = await model.rate_res.findOne({
+			where: {
+				user_id: Number(user_id),
+				res_id: Number(res_id),
+			},
+		});
+		// Nếu người dùng đã đánh giá nhà hàng đó rồi mà muốn đánh giá lại
+		if (isRate) {
+			let val = {
+				user_id,
+				res_id,
+				amount: Number(amount),
+				date_rate: moment().format(),
+			};
+			await model.rate_res.update(val, {
+				where: {
+					user_id,
+					res_id,
+				},
+			});
+			success(res, val, 'Update restaurant rate successfully!');
+			return;
+		}
+		// Nếu chưa có đánh giá thì thêm đánh giá người dùng vào hệ thống
+		let val = {
+			user_id,
+			res_id,
+			amount: Number(amount),
+			date_rate: moment().format(),
+		};
+		await model.rate_res.create(val);
+		success(res, val, 'Restaurant rate successfully!');
 	} catch (err) {
 		error(res, 'Server is error');
 	}
