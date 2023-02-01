@@ -232,6 +232,27 @@ const unlikeRes = async (req, res) => {
 // get like restaurant list
 const getLikeResList = async (req, res) => {
 	try {
+		let { user_id } = req.body;
+		let isReqExits = hasReqClient(res, user_id);
+		if (!isReqExits) {
+			return;
+		}
+		let isUserExits = await hasDataExist('user', 'user_id', user_id);
+		if (!isUserExits) {
+			notFound(res, { user_id: user_id }, 'User does not exits!');
+			return;
+		}
+		// Kiểm tra người dùng đã like nhà hàng đó chưa
+		const result = await model.like_res.findAll({
+			include: 'restaurant_details',
+			attributes: ['date_like'],
+			where: { user_id },
+		});
+		if (result.length === 0) {
+			success(res, result, 'User does not like restaurant!');
+			return;
+		}
+		success(res, result, 'Get restaurant list successfully!');
 	} catch (err) {
 		error(res, 'Server is error');
 	}

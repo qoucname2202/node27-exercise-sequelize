@@ -60,9 +60,15 @@ function initModels(sequelize) {
 	food.hasMany(sub_food, { as: 'sub_foods', foreignKey: 'food_id' });
 	food.belongsTo(food_type, { as: 'type', foreignKey: 'type_id' });
 	food_type.hasMany(food, { as: 'foods', foreignKey: 'type_id' });
-	like_res.belongsTo(restaurant, { as: 're', foreignKey: 'res_id' });
+	like_res.belongsTo(restaurant, {
+		as: 'restaurant_details',
+		foreignKey: 'res_id',
+	});
 	restaurant.hasMany(like_res, { as: 'like_res', foreignKey: 'res_id' });
-	rate_res.belongsTo(restaurant, { as: 're', foreignKey: 'res_id' });
+	rate_res.belongsTo(restaurant, {
+		as: 'restaurant_details',
+		foreignKey: 'res_id',
+	});
 	restaurant.hasMany(rate_res, { as: 'rate_res', foreignKey: 'res_id' });
 	like_res.belongsTo(user, { as: 'user', foreignKey: 'user_id' });
 	user.hasMany(like_res, { as: 'like_res', foreignKey: 'user_id' });
