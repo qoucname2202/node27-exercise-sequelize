@@ -1,9 +1,17 @@
 // const User = require('../model/user');
 const sequelize = require('../model/index');
 const initModels = require('../model/init-models');
+const moment = require('moment');
 const model = initModels(sequelize);
-const { success, failSyntax, error } = require('../config/response');
-
+const {
+	success,
+	failSyntax,
+	error,
+	notFound,
+	conflict,
+} = require('../config/response');
+const { hasReqClient, hasDataExist } = require('../utils/utils');
+// Get all user
 const getAllUser = async (req, res) => {
 	try {
 		let data = await model.user.findAll();
@@ -13,6 +21,7 @@ const getAllUser = async (req, res) => {
 	}
 };
 
+// Get user by id
 const getUser = async (req, res) => {
 	try {
 		let { id } = req.params;
@@ -31,6 +40,7 @@ const getUser = async (req, res) => {
 	}
 };
 
+// create new user
 const createUser = async (req, res) => {
 	try {
 		let { full_name, email, pass_word } = req.body;
@@ -39,7 +49,6 @@ const createUser = async (req, res) => {
 			email,
 			pass_word,
 		};
-
 		let data = await model.user.create(models);
 		if (data) {
 			success(res, data, 'Thêm user thành công!');
@@ -49,6 +58,7 @@ const createUser = async (req, res) => {
 	}
 };
 
+// updated user
 const updateUser = async (req, res) => {
 	try {
 		let { id } = req.params;
@@ -64,7 +74,6 @@ const updateUser = async (req, res) => {
 				email,
 				pass_word,
 			};
-
 			let dataUpdate = await model.user.update(models, {
 				where: {
 					user_id: id,
@@ -84,6 +93,7 @@ const updateUser = async (req, res) => {
 	}
 };
 
+// deleted user
 const deleteUser = async (req, res) => {
 	try {
 		let { id } = req.params;
@@ -108,16 +118,101 @@ const deleteUser = async (req, res) => {
 		error(res, 'Server is error');
 	}
 };
+// check user and restaurant is exits database
+const hasUserResExist = async (
+	response,
+	tblUser,
+	userKey,
+	userId,
+	tblRes,
+	resKey,
+	resId,
+) => {
+	const isUserExits = await hasDataExist(tblUser, userKey, userId);
+	const isResExits = await hasDataExist(tblRes, resKey, resId);
+	if (!isUserExits) {
+		notFound(response, { user_id: userId }, 'User does not existed');
+		return false;
+	}
+	if (!isResExits) {
+		notFound(response, { res_id: resId }, 'Restaurant does not existed');
+		return false;
+	}
+	return true;
+};
+
 // like restaurant
-const likeRes = async (req, res) => {};
+const likeRes = async (req, res) => {
+	try {
+		let { user_id, res_id } = req.body;
+		let isReqExits = hasReqClient(res, user_id, res_id);
+		if (!isReqExits) {
+			return;
+		}
+		// Kiếm tra
+		let isUserAndResExits = await hasUserResExist(
+			res,
+			'user',
+			'user_id',
+			Number(user_id),
+			'restaurant',
+			'res_id',
+			Number(res_id),
+		);
+		if (!isUserAndResExits) {
+			return;
+		}
+		// Kiểm tra người dùng đã like nhà hàng đó chưa
+		const isLike = await model.like_res.findOne({
+			where: {
+				user_id: Number(user_id),
+				res_id: Number(res_id),
+			},
+		});
+		// Nếu người dùng đã like nhà hàng đó rồi thì thông báo
+		if (isLike) {
+			conflict(res, '', 'Already liked the restaurant');
+			return;
+		}
+		let val = {
+			user_id,
+			res_id,
+			date_like: moment().format(),
+		};
+		const result = await model.like_res.create(val);
+		success(res, result, 'Like success!');
+	} catch (err) {
+		error(res, 'Server is error');
+	}
+};
 // unlike restaurant
-const unlikeRes = async (req, res) => {};
-// get like restauurant list
-const getLikeResList = async (req, res) => {};
+const unlikeRes = async (req, res) => {
+	try {
+	} catch (err) {
+		error(res, 'Server is error');
+	}
+};
+// get like restaurant list
+const getLikeResList = async (req, res) => {
+	try {
+	} catch (err) {
+		error(res, 'Server is error');
+	}
+};
 // rate restaurant
-const rateRes = async (req, res) => {};
+const rateRes = async (req, res) => {
+	try {
+	} catch (err) {
+		error(res, 'Server is error');
+	}
+};
 // get rate restaurant list
-const getRateResList = async (req, res) => {};
+const getRateResList = async (req, res) => {
+	try {
+	} catch (err) {
+		error(res, 'Server is error');
+	}
+};
 module.exports = {
 	getAllUser,
 	getUser,
