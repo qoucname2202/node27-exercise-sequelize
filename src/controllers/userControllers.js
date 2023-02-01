@@ -188,6 +188,43 @@ const likeRes = async (req, res) => {
 // unlike restaurant
 const unlikeRes = async (req, res) => {
 	try {
+		let { user_id, res_id } = req.body;
+		let isReqExits = hasReqClient(res, user_id, res_id);
+		if (!isReqExits) {
+			return;
+		}
+		// Kiếm tra
+		let isUserAndResExits = await hasUserResExist(
+			res,
+			'user',
+			'user_id',
+			Number(user_id),
+			'restaurant',
+			'res_id',
+			Number(res_id),
+		);
+		if (!isUserAndResExits) {
+			return;
+		}
+		// Kiểm tra người dùng đã like nhà hàng đó chưa
+		const isLike = await model.like_res.findOne({
+			where: {
+				user_id: Number(user_id),
+				res_id: Number(res_id),
+			},
+		});
+		// Nếu người dùng đã like nhà hàng đó rồi thì thông báo
+		if (!isLike) {
+			conflict(res, '', 'User not liked the restaurant yet');
+			return;
+		}
+		const result = await model.like_res.destroy({
+			where: {
+				user_id,
+				res_id,
+			},
+		});
+		success(res, result, 'Unlike restaurant successfully!');
 	} catch (err) {
 		error(res, 'Server is error');
 	}
