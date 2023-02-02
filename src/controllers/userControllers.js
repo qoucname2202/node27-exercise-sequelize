@@ -150,7 +150,6 @@ const getLikeResList = async (req, res) => {
 		error(res, 'Server is error');
 	}
 };
-
 // rate restaurant
 const rateRes = async (req, res) => {
 	try {
@@ -221,6 +220,27 @@ const rateRes = async (req, res) => {
 // get rate restaurant list
 const getRateResList = async (req, res) => {
 	try {
+		let { id } = req.params;
+		let isReqExits = hasReqClient(res, id);
+		if (!isReqExits) {
+			return;
+		}
+		let isUserExits = await hasDataExist('user', 'user_id', id);
+		if (!isUserExits) {
+			notFound(res, { user_id: id }, 'User does not exits!');
+			return;
+		}
+		// Kiểm tra người dùng đã đánh giá nhà hàng đó chưa
+		const result = await model.rate_res.findAll({
+			include: 'restaurant_details',
+			attributes: ['date_rate'],
+			where: { user_id: id },
+		});
+		if (result.length === 0) {
+			success(res, result, 'User does not rate restaurant!');
+			return;
+		}
+		success(res, result, 'Get restaurant list successfully!');
 	} catch (err) {
 		error(res, 'Server is error');
 	}
