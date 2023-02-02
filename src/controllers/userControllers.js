@@ -33,7 +33,6 @@ const hasUserResExist = async (
 	}
 	return true;
 };
-
 // like restaurant
 const likeRes = async (req, res) => {
 	try {
@@ -245,6 +244,7 @@ const getRateResList = async (req, res) => {
 		error(res, 'Server is error');
 	}
 };
+
 module.exports = {
 	likeRes,
 	unlikeRes,

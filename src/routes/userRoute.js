@@ -19,4 +19,5 @@ userRoute.get('/getLikeResList/:id', getLikeResList);
 userRoute.post('/rateRes', rateRes);
 // get rate reataurant list
 userRoute.get('/getRateResList/:id', getRateResList);
+
 module.exports = userRoute;
