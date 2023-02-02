@@ -1,0 +1,487 @@
+{
+	"info": {
+		"_postman_id": "fff8ad2a-4ea9-499c-8d59-9554952b399a",
+		"name": "Cybersoft",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14233624"
+	},
+	"item": [
+		{
+			"name": "Food API",
+			"item": [
+				{
+					"name": "User",
+					"item": [
+						{
+							"name": "Get all user",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "accesstoken",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXJfaWQiOjE2LCJmdWxsX25hbWUiOiJNaW5oIiwiZW1haWwiOiJtaW5oZHVvbmdAZ21haWwuY29tIiwicGFzc193b3JkIjoiJDJiJDEwJEZwRW11c1BhT3VjZTZVdWhIRWpPbnVSREhUZVFmaXFUckpKWVFYQ0hROE1nZEVBVXMzOGFHIn0sImlhdCI6MTY3NTI2MTU1MSwiZXhwIjoxNjc1MjYxODUxfQ.prExwjyPdHmGCWNPzuBJ-XP3i4Ox1eHMcQ9GJeCvWWw",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{FOOD_URL}}/user/getAllUser",
+									"host": [
+										"{{FOOD_URL}}"
+									],
+									"path": [
+										"user",
+										"getAllUser"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get user by id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{FOOD_URL}}/user/getUser/1",
+									"host": [
+										"{{FOOD_URL}}"
+									],
+									"path": [
+										"user",
+										"getUser",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create user",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"full_name\": \"Nam\",\r\n    \"email\": \"namduong@gmail.com\",\r\n    \"pass_word\": \"nam123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{FOOD_URL}}/user/createUser",
+									"host": [
+										"{{FOOD_URL}}"
+									],
+									"path": [
+										"user",
+										"createUser"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update user",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"full_name\": \"DuongNam\",\r\n    \"email\": \"namduong@gmail.com\",\r\n    \"pass_word\": \"nam123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{FOOD_URL}}/user/updateUser/14",
+									"host": [
+										"{{FOOD_URL}}"
+									],
+									"path": [
+										"user",
+										"updateUser",
+										"14"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete user",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{FOOD_URL}}/user/deleteUser/14",
+									"host": [
+										"{{FOOD_URL}}"
+									],
+									"path": [
+										"user",
+										"deleteUser",
+										"14"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Upload image",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "file",
+											"type": "file",
+											"src": "/C:/Users/user/Desktop/123426038_403499754132501_6262238402186732123_n.jpg"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{FOOD_URL}}/user/upload",
+									"host": [
+										"{{FOOD_URL}}"
+									],
+									"path": [
+										"user",
+										"upload"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Like",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"user_id\": 1,\r\n    \"res_id\": 2\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{FOOD_URL}}/user/likeRes",
+									"host": [
+										"{{FOOD_URL}}"
+									],
+									"path": [
+										"user",
+										"likeRes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Unlike",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"user_id\": 1,\r\n    \"res_id\": 2\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{FOOD_URL}}/user/unlikeRes",
+									"host": [
+										"{{FOOD_URL}}"
+									],
+									"path": [
+										"user",
+										"unlikeRes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get list restaurant user like",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"user_id\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{FOOD_URL}}/user/getLikeResList/1",
+									"host": [
+										"{{FOOD_URL}}"
+									],
+									"path": [
+										"user",
+										"getLikeResList",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Rate restaurant",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"user_id\": 1,\r\n    \"res_id\": 2,\r\n    \"amount\": 4\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{FOOD_URL}}/user/rateRes",
+									"host": [
+										"{{FOOD_URL}}"
+									],
+									"path": [
+										"user",
+										"rateRes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get list restaurant user rate",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{FOOD_URL}}/user/getRateResList/1",
+									"host": [
+										"{{FOOD_URL}}"
+									],
+									"path": [
+										"user",
+										"getRateResList",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Food",
+					"item": [
+						{
+							"name": "Get all food",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{FOOD_URL}}/food/getAllFood",
+									"host": [
+										"{{FOOD_URL}}"
+									],
+									"path": [
+										"food",
+										"getAllFood"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Restaurant",
+					"item": [
+						{
+							"name": "Get list of user like the restaurant",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{FOOD_URL}}/restaurant/getUserLikeRes/1",
+									"host": [
+										"{{FOOD_URL}}"
+									],
+									"path": [
+										"restaurant",
+										"getUserLikeRes",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get list of user rate the restaurant",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{FOOD_URL}}/restaurant/getUserRateRes/3",
+									"host": [
+										"{{FOOD_URL}}"
+									],
+									"path": [
+										"restaurant",
+										"getUserRateRes",
+										"3"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Authentication",
+					"item": [
+						{
+							"name": "SignIn",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"minhduong@gmail.com\",\r\n    \"pass_word\": \"12345\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{FOOD_URL}}/user/signIn",
+									"host": [
+										"{{FOOD_URL}}"
+									],
+									"path": [
+										"user",
+										"signIn"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "SignUp",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"full_name\": \"Minh\",\r\n    \"email\": \"minhduong@gmail.com\",\r\n    \"pass_word\": \"12345\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{FOOD_URL}}/user/signUp",
+									"host": [
+										"{{FOOD_URL}}"
+									],
+									"path": [
+										"user",
+										"signUp"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "ChangePassword",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"new_password\": \"nam123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{FOOD_URL}}/user/changePassword",
+									"host": [
+										"{{FOOD_URL}}"
+									],
+									"path": [
+										"user",
+										"changePassword"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Order",
+					"item": [
+						{
+							"name": "Create order",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"user_id\": 1,\r\n    \"food_id\": 1,\r\n    \"amount\": 0\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{FOOD_URL}}/order/createOrder",
+									"host": [
+										"{{FOOD_URL}}"
+									],
+									"path": [
+										"order",
+										"createOrder"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}
