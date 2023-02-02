@@ -70,11 +70,11 @@ function initModels(sequelize) {
 		foreignKey: 'res_id',
 	});
 	restaurant.hasMany(rate_res, { as: 'rate_res', foreignKey: 'res_id' });
-	like_res.belongsTo(user, { as: 'user', foreignKey: 'user_id' });
+	like_res.belongsTo(user, { as: 'user_details', foreignKey: 'user_id' });
 	user.hasMany(like_res, { as: 'like_res', foreignKey: 'user_id' });
 	order.belongsTo(user, { as: 'user', foreignKey: 'user_id' });
 	user.hasMany(order, { as: 'orders', foreignKey: 'user_id' });
-	rate_res.belongsTo(user, { as: 'user', foreignKey: 'user_id' });
+	rate_res.belongsTo(user, { as: 'user_details', foreignKey: 'user_id' });
 	user.hasMany(rate_res, { as: 'rate_res', foreignKey: 'user_id' });
 
 	return {

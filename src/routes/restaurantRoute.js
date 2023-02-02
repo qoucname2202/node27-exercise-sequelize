@@ -7,8 +7,8 @@ const {
 } = require('../controllers/restaurantController');
 
 // Get user list like restaurant
-restaurantRoute.get('/getUserLikeRes', getUserLikeRes);
+restaurantRoute.get('/getUserLikeRes/:id', getUserLikeRes);
 // Get user list rate restaurant
-restaurantRoute.get('/getUserRateRes', getUserRateRes);
+restaurantRoute.get('/getUserRateRes/:id', getUserRateRes);
 
 module.exports = restaurantRoute;
